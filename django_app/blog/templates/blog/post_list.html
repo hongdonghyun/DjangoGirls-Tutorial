@@ -4,7 +4,7 @@
 {% block content %}
 <div class = 'post-list'>{% for post in posts %}
             <div class="post">
-            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <h1><a href="/post/{{ post.pk }}/">{{ post.title }}</a></h1>
             <p class="text-right"><small>{{post.published_date}}</small></p>
             <p>{{post.text|truncatechars:100}}</p>
             <p>{{post.created_date}}</p>
