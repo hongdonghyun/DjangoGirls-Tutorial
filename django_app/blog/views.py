@@ -3,7 +3,10 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Post
 from django.utils import timezone
+from .forms import PostCreateForm
+
 User = get_user_model()
+
 
 # Create your views here.
 
@@ -35,20 +38,30 @@ def post_detail(request, pk):
 
 
 def post_create(request):
-    if request.method =='GET': # get url에 접근했을때 요청
+    if request.method == 'GET':  # get url에 접근했을때 요청
+        form = PostCreateForm()
         context = {
-
+            'form' : form,
         }
         return render(request, 'blog/post_create.html', context)
-    elif request.method =='POST': # 데이터를 변경했을때의 요
-        data = request.POST
-        print(data)
-        title = data['title']
-        text = data['text']
-        user = User.objects.first()
-        post = Post.objects.create(
-            title = title,
-            text= text,
-            author= user,
-        )
-        return redirect('post_detail',pk=post.pk)
+    elif request.method == 'POST':  # 데이터를 변경했을때의 요
+        # Form클래스의 생성자에 POST데이터를 전달하여 Form인스턴스를 생성
+        form = PostCreateForm(request.POST)
+        # Form인스턴의 유효성을 검사하는 is_valid메서드
+        if form.is_valid():
+            title = form.cleaned_date['title']
+            text = form.cleaned_data['text']
+        # title = data['title']
+        # text = data['text']
+            user = User.objects.first()
+            post = Post.objects.create(
+            title=title,
+            text=text,
+            author=user,
+            )
+            return redirect('post_detail', pk=post.pk)
+        else:
+            context = {
+                'form': form,
+            }
+            return render(request, 'blog/post_create.html', context)
