@@ -16,8 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #os.path.join을 사용해서 TEMPLATE_DIR변수에 django_app/templates폴더의 경로를 할당
 TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
-print('BASE DIR :',BASE_DIR)
-print('TEMPLATE_DIR : ',TEMPLATE_DIR)
+STATIC_DIR = os.path.join(BASE_DIR,'static')
 
 
 # Quick-start development settings - unsuitable for production
@@ -123,5 +122,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
+# blog안에 있는 static폴더를 찾고있다
+#'/static/'으로 시작하면 정적파일이 있는지 찾아서 사용
 
+#이 경로로 시작하는 URL은 정적파일들의 위치에서 파일을 찾아 리턴
 STATIC_URL = '/static/'
+
+#이 리스트(or 튜플)의 경로는 STATIC_URL로 요청된 파일을 찾는 폴더로 사용됨
+STATICFILES_DIRS  =(
+    STATIC_DIR,
+)
