@@ -6,7 +6,7 @@
             <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
             <p class="text-right"><small>{{post.published_date}}</small></p>
             <p>{{post.text|truncatechars:100}}</p>
-            <p>{{post.created_date}}</p>
+            <p>만든 날짜 : {{post.created_date}}</p>
             </div>
 
         </div>

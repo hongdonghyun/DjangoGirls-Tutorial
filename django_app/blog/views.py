@@ -1,8 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Post
 from django.utils import timezone
-
+User = get_user_model()
 
 # Create your views here.
 
@@ -11,7 +12,7 @@ def post_list(request):
     # return render(request,'blog/post_list.html')
     # posts변수에 ORM을 이용해서 전체 post의 리스트(쿼리셋)를 대입
     # posts = Post.objects.filter(published_date__lte=timezone.now())
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-created_date')
     print(posts)
 
     context = {
@@ -34,7 +35,20 @@ def post_detail(request, pk):
 
 
 def post_create(request):
-    context = {
+    if request.method =='GET': # get url에 접근했을때 요청
+        context = {
 
-    }
-    return render(request, 'blog/post_create.html', context)
+        }
+        return render(request, 'blog/post_create.html', context)
+    elif request.method =='POST': # 데이터를 변경했을때의 요
+        data = request.POST
+        print(data)
+        title = data['title']
+        text = data['text']
+        user = User.objects.first()
+        post = Post.objects.create(
+            title = title,
+            text= text,
+            author= user,
+        )
+        return redirect('post_detail',pk=post.pk)

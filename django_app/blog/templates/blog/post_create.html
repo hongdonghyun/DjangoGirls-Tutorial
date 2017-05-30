@@ -8,13 +8,14 @@ blog/base.html을 확장하여
 {% block content %}
 <div class='text_create'>
     <form action="" method="POST">
+        {% csrf_token %}
         <div class='text_title'>
-            제목<input type="text">
+            제목<input name="title" type="text">
 
         </div>
 
         <div class="textarea">
-            내용 <textarea name="" id="" cols="30" rows="10">
+            내용 <textarea name="text" id="" cols="30" rows="10">
 
         </textarea>
 
