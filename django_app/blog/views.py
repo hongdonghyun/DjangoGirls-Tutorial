@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .models import Post
 from django.utils import timezone
 
+
 # Create your views here.
 
 def post_list(request):
@@ -14,19 +15,26 @@ def post_list(request):
     print(posts)
 
     context = {
-        'title' : 'PostList from post_list view',
-        'posts' : posts
+        'title': 'PostList from post_list view',
+        'posts': posts
     }
 
-    return render(request,'blog/post_list.html',context=context)
+    return render(request, 'blog/post_list.html', context=context)
 
 
-def post_detail(request,pk):
-    print("post_detail pk : ",pk)
-    #post라는 키값으로 pk또는 id값이 매개변수로 주어진 pk변수와 같은 Post객체에 전달
+def post_detail(request, pk):
+    print("post_detail pk : ", pk)
+    # post라는 키값으로 pk또는 id값이 매개변수로 주어진 pk변수와 같은 Post객체에 전달
     posts = Post.objects.get(pk=pk)
     context = {
-        'post' : posts
+        'post': posts
 
     }
-    return render(request,'blog/post_detail.html',context)
+    return render(request, 'blog/post_detail.html', context)
+
+
+def post_create(request):
+    context = {
+
+    }
+    return render(request, 'blog/post_create.html', context)

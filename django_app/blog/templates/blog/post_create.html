@@ -1,0 +1,29 @@
+blog/base.html을 확장하여
+제목(input type text)
+내용(textarea)
+작성버튼 (button)
+을 갖는 html작성
+
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class='text_create'>
+    <form action="" method="POST">
+        <div class='text_title'>
+            제목<input type="text">
+
+        </div>
+
+        <div class="textarea">
+            내용 <textarea name="" id="" cols="30" rows="10">
+
+        </textarea>
+
+        </div>
+
+        <div class="create_button">
+            <button type="submit">작성</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
