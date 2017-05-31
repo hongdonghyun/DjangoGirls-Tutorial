@@ -8,6 +8,7 @@ class PostCreateForm(forms.Form):
         required=True,
         widget=forms.TextInput(
             attrs={
+                'placeholder': 'ㅌ타일트아다으다',
                 'class': 'form-control'
             }
         )

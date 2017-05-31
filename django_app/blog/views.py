@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render,redirect
 from .models import Post
 from django.utils import timezone
 from .forms import PostCreateForm
@@ -65,3 +65,25 @@ def post_create(request):
                 'form': form,
             }
             return render(request, 'blog/post_create.html', context)
+
+def post_modify(request,pk):
+    post = Post.objects.get(pk=pk)
+    if request.method == 'POST':
+        #POST요청(request)가 올 경우 전달받은 데이터의 title,Text값을 사용해서
+        # 해당하는 Post인스턴스 (post)의 title, text속성값에 덮어씌우고
+        #DB에 업데이트하는 save()메서드 실행
+        data = request.POST
+        title = data['title']
+        text = data['text']
+        post.title =title
+        post.text = text
+        post.save()
+        # 기존 post인스턴스를 업데이트 한 후 다시 글 상세화면으로 이동
+        return redirect('post_detail',pk=post.pk)
+    elif request.method =='GET':
+        #pk에 해당하는 Post인스턴스를 전달
+        context ={
+            'post' : post,
+
+        }
+        return render(request,'blog/post_modify.html',context)
